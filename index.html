@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Pertanyaan for jaja</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      text-align: left;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #06b4db;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 0.5rem 0 0.3rem;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 0.9rem;
+      margin: 0.5rem 0 1.5rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: all 0.3s;
+    }
+    input:focus, select:focus, button:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+    button {
+      background-color: #207b77;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #16dada;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pertanyaan Sehari-Hari</h1>
+    
+    <!-- Pertanyaan 1 -->
+    <label>1. Kamu udah makan belum?</label>
+    <select id="makanStatus">
+      <option value="Udah">Udah</option>
+      <option value="Belum">Belum</option>
+    </select>
+
+    <!-- Pertanyaan 2 -->
+    <label>2.  kasih pesan buat apa aja buat jaja?</label>
+    <input type="text" id="mauMakanApa" placeholder="Contoh: jaja suka makan apa, jaja suka siapa?">
+
+    <!-- Pertanyaan 3 -->
+    <label>3.  ini siapa?</label>
+    <input type="text" id="lokasi" placeholder="Contoh: secret , faeyza">
+
+    <!-- Tombol Submit -->
+    <button onclick="kirimKeDiscord()">Kirim Jawaban</button>
+  </div>
+
+  <script>
+    function kirimKeDiscord() {
+      const webhookURL = "https://discord.com/api/webhooks/1318575038668210256/qaAytUTR724C-mOf03ld5aPXbuDaqfvGo7LrmYyEZ1c2kRLjFgsxlus55umYuAUw7M_L"; // Ganti dengan webhook URL milikmu
+      const makanStatus = document.getElementById("makanStatus").value;
+      const mauMakanApa = document.getElementById("mauMakanApa").value;
+      const lokasi = document.getElementById("lokasi").value;
+
+      const data = {
+        content: `**Jawaban Pertanyaan:**\n1. Kamu udah makan? - **${makanStatus}**\n2. Mau makan apa? - **${mauMakanApa}**\n3. Lagi dimana? - **${lokasi}**`
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Jawaban berhasil dikirim ke Discord!');
+        } else {
+          alert('Gagal mengirim jawaban. Periksa webhook URL.');
+        }
+      })
+      .catch(error => alert('Error: ' + error.message));
+    }
+  </script>
+</body>
+</html>
